@@ -24,6 +24,7 @@ app.use("/api/users", userRoutes);
 
 console.log(`Connecting to MongoDB...`);
 app.listen(PORT, () => {
-  connectToMongoDB();
-  console.log(`Server is running on < http://localhost:${PORT} >`);
+  connectToMongoDB().then(() =>
+    console.log(`Server is running on: \x1b[34mhttp://localhost:${PORT}\x1b[0m`)
+  );
 });
