@@ -1,22 +1,35 @@
-import { BsSend } from "react-icons/bs";
+import { useEffect, useRef } from "react";
+import useGetMessages from "../../hooks/useGetMessages";
+import MessageSkeleton from "../skeletons/MessageSkeleton";
+import Message from "./Message";
+import useListenMessages from "../../hooks/useListenMessages";
 
-const MessageInput = () => {
+const Messages = () => {
+  const { messages, loading } = useGetMessages();
+  useListenMessages();
+  const lastMessageRef = useRef();
+
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
+
   return (
-    <form className="px-4 my-3">
-      <div className="relative  w-full">
-        <input
-          type="text"
-          className="border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white"
-          placeholder="Send a message"
-        />
-        <button
-          type="submit"
-          className="absolute inset-y-0 end-0 flex items-center pe-3"
-        >
-          <BsSend />
-        </button>
-      </div>
-    </form>
+    <div className="px-4 flex-1 overflow-auto">
+      {!loading &&
+        messages.length > 0 &&
+        messages.map((message) => (
+          <div key={message._id} ref={lastMessageRef}>
+            <Message message={message} />
+          </div>
+        ))}
+
+      {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
+      {!loading && messages.length === 0 && (
+        <p className="text-center">Send a message to start the conversation</p>
+      )}
+    </div>
   );
 };
-export default MessageInput;
+export default Messages;
