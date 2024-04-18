@@ -19,8 +19,11 @@ const Messages = () => {
     <div className="px-4 flex-1 overflow-auto">
       {!loading &&
         messages.length > 0 &&
-        messages.map((message) => (
-          <div key={message._id} ref={lastMessageRef}>
+        messages.map((message, index) => (
+          <div
+            key={message._id}
+            ref={index === messages.length - 1 ? lastMessageRef : null}
+          >
             <Message message={message} />
           </div>
         ))}

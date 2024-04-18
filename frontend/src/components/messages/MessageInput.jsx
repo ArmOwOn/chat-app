@@ -1,35 +1,40 @@
-import { useEffect, useRef } from "react";
-import useGetMessages from "../../hooks/useGetMessages";
-import MessageSkeleton from "../skeletons/MessageSkeleton";
-import Message from "./Message";
-import useListenMessages from "../../hooks/useListenMessages";
+import { useState } from "react";
+import { BsSend } from "react-icons/bs";
+import useSendMessage from "../../hooks/useSendMessage";
 
-const Messages = () => {
-  const { messages, loading } = useGetMessages();
-  useListenMessages();
-  const lastMessageRef = useRef();
+const MessageInput = () => {
+  const [message, setMessage] = useState("");
+  const { loading, sendMessage } = useSendMessage();
 
-  useEffect(() => {
-    setTimeout(() => {
-      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
-  }, [messages]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message) return;
+    await sendMessage(message);
+    setMessage("");
+  };
 
   return (
-    <div className="px-4 flex-1 overflow-auto">
-      {!loading &&
-        messages.length > 0 &&
-        messages.map((message) => (
-          <div key={message._id} ref={lastMessageRef}>
-            <Message message={message} />
-          </div>
-        ))}
-
-      {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
-      {!loading && messages.length === 0 && (
-        <p className="text-center">Send a message to start the conversation</p>
-      )}
-    </div>
+    <form className="px-4 my-3" onSubmit={handleSubmit}>
+      <div className="w-full relative">
+        <input
+          type="text"
+          className="border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white"
+          placeholder="Send a message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="absolute inset-y-0 end-0 flex items-center pe-3"
+        >
+          {loading ? (
+            <div className="loading loading-spinner"></div>
+          ) : (
+            <BsSend />
+          )}
+        </button>
+      </div>
+    </form>
   );
 };
-export default Messages;
+export default MessageInput;
