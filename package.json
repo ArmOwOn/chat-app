@@ -9,8 +9,10 @@
   "description": "FullStack web Chat-app",
   "scripts": {
     "server": "nodemon backend/server.js",
+    "start": "node backend/server.js",
     "dev": "vite frontend",
-    "build": "vite build frontend",
+    "vite-build": "vite build frontend",
+    "build": "npm install && npm run vite-build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview frontend"
   },
