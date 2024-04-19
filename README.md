@@ -10,7 +10,7 @@ The Simple Chat App is a user-friendly messaging application that allows users t
 
 **Client:** React, Zustand, TailwindCSS, DaisyUI
 
-**Server:** Node, Express, Mangoose, Socket.io
+**Server:** Node, Express, Mongoose, Socket.io
 
 ## Run Locally
 
