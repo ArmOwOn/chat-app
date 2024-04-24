@@ -1,4 +1,4 @@
-# Full-stack Chat-app
+# Full-stack Chat-app with JS & React
 
 ![App Screenshot](/screenshots/Screenshot%202024-04-19%20000133.png)
 
