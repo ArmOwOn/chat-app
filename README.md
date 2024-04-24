@@ -6,7 +6,7 @@
 
 The Simple Chat App is a user-friendly messaging application that allows users to communicate with each other in real-time. The app features a search functionality and notification system to enhance the user experience.
 
-## technologies
+## Technologies
 
 **Client:** React, Zustand, TailwindCSS, DaisyUI
 
